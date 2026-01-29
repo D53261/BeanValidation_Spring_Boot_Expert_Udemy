@@ -21,6 +21,7 @@ import java.util.UUID;
  */
 public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
+    boolean existsByAutor(Autor autor);
     // Query method: Busca todos os livros associados a um autor específico.
     // select * from livro where autor_id = ?
     List<Livro> findByAutor(Autor autor);

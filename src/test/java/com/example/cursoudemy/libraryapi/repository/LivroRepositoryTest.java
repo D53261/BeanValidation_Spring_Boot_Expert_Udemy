@@ -44,7 +44,7 @@ public class LivroRepositoryTest {
         livro.setDataPublicacao(LocalDate.of(2054, 10, 05)); // Define a data de publicação
 
         // Busca um autor existente pelo ID para associar ao livro (demonstra relacionamento @ManyToOne)
-        Autor autor = autores.findById(UUID.fromString("9897bbfa-8d2a-41bd-bfb1-7d588c82a83d"))
+        Autor autor = autores.findById(UUID.fromString("6c86e702-36bb-4fbd-a01c-99232558231f"))
                 .orElse(null);
 
         livro.setAutor(autor); // Associa o autor ao livro

@@ -4,8 +4,12 @@ import jakarta.persistence.*; // Importa as anotações JPA para mapeamento ORM
 import lombok.Getter; // Gera automaticamente os métodos getter
 import lombok.Setter; // Gera automaticamente os métodos setter
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate; // Representa datas sem horário
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID; // Identificador único universal
 
@@ -14,6 +18,7 @@ import java.util.UUID; // Identificador único universal
 @Getter // Lombok: gera os getters para todos os campos
 @Setter // Lombok: gera os setters para todos os campos
 @ToString(exclude = "livros") // Lombok: gera o método toString para a classe poder ser impressa como string
+@EntityListeners(AuditingEntityListener.class) // Habilita o suporte a auditoria (criação e modificação automática de datas se essas ou outros campos forem anotados)
 public class Autor {
 
     @Id // Indica o campo como chave primária
@@ -36,8 +41,19 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false) // Mapeia para a coluna 'nacionalidade', obrigatório, até 50 caracteres
     private String nacionalidade; // Nacionalidade do autor
 
-    @OneToMany(mappedBy = "id_autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Relacionamento um-para-muitos com a entidade Livro, pegando o nome da coluna que referencia o autor na tabela Livro, com operações em cascata e carregamento imediato
+    @OneToMany(mappedBy = "id_autor", fetch = FetchType.EAGER)
+    //        , cascade = CascadeType.ALL // Relacionamento um-para-muitos com a entidade Livro, pegando o nome da coluna que referencia o autor na tabela Livro, com operações em cascata e carregamento imediato
     @Transient // Indica que este campo não será persistido no banco de dados
     private List<Livro> livros; // Lista de livros escritos pelo autor
 
+    @CreatedDate
+    @Column(name = "data_cadastro")
+    private LocalDateTime dataCadastro; // Data e hora do cadastro do autor
+
+    @LastModifiedDate
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao; // Data e hora da última atualização do autor
+
+    @Column(name = "id_usuario")
+    private UUID usuarioCadastro; // Identificador do usuário que cadastrou o autor
 }

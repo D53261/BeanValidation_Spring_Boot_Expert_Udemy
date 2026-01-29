@@ -3,13 +3,16 @@ package com.example.cursoudemy.libraryapi.controller.dto;
 import com.example.cursoudemy.libraryapi.models.Autor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 // DTO - Data Transfer Object
 // Objeto de transferencia de dados
 // Usado para transferir dados entre camadas da aplicacao, evitando expor diretamente as entidades do dominio
-public record AutorDTO(String nome,
-                       LocalDate dataNascimento,
-                       String nacionalidade) {
+public record AutorDTO(
+        UUID id,
+        String nome,
+        LocalDate dataNascimento,
+        String nacionalidade) {
     // Mapeia o DTO para a entidade Autor
     public Autor mapearParaAutor() {
         Autor autor = new Autor();
