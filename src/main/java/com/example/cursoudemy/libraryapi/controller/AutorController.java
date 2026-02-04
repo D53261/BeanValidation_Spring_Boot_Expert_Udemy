@@ -6,6 +6,7 @@ import com.example.cursoudemy.libraryapi.exceptions.OperacaoNaoPermitidaExceptio
 import com.example.cursoudemy.libraryapi.exceptions.RegistroDuplicadoException;
 import com.example.cursoudemy.libraryapi.models.Autor;
 import com.example.cursoudemy.libraryapi.service.AutorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class AutorController {
 
     @PostMapping // Mapeia requisicoes HTTP POST para este metodo, pode ser posto uma URL mapeada dentro dos parenteses
     // Pode ser colocado tambem o @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) { // Valid: Valida o DTO conforme as anotações de validação presentes na classe AutorDTO
         try {  // Tenta salvar o autor recebido no corpo da requisicao
             Autor autorEntity = autor.mapearParaAutor();
             service.salvar(autorEntity);
